@@ -1,9 +1,10 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models import User
-from app.quote import Quote 
+from app.quote import Quote
+from app.schema import Quote as Qu
 
 
 application = FastAPI()
@@ -28,3 +29,8 @@ async def get_quote_by_id(quote_id: int,db: Session = Depends(get_db)):
     return quote.get_by_id(quote_id)
 
 
+
+@application.post("/quotes")
+async def add_quote(UserQuote: Qu, db: Session = Depends(get_db)):
+    quote = Quote(db)
+    return quote.create(UserQuote)

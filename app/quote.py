@@ -2,8 +2,9 @@ from fastapi import Depends, HTTPException
 from fastapi.responses import JSONResponse
 import random
 
+from .database import get_db
 from .models import Quote as QuoteModel
-from app.database import get_db
+from .schema import Quote as QuoteSchema
 
 class Quote:
     """
@@ -36,3 +37,12 @@ class Quote:
     
     def get_count(self):
         return self.db.query(QuoteModel).count()
+
+
+    def create(self, UserQuote: QuoteSchema):
+        db_quote = QuoteModel(text=UserQuote.text, author=UserQuote.author)
+        self.db.add(db_quote)
+        self.db.commit()
+        self.db.refresh(db_quote)
+        return db_quote
+        
