@@ -8,8 +8,9 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = "users"
     id: int = Column(Integer, primary_key=True, index=True)
-    email: str = Column(String(60), index=True)
-    password: str = Column(String(40))
+    email: str = Column(String(30), index=True)
+    password: str = Column(String(30))
+    token: str = Column(Text, index=True)
 
 class Quote(Base):
     __tablename__ = "quotes"

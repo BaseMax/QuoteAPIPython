@@ -1,12 +1,19 @@
 import requests
 
-URL = "http://localhost:8000/quotes/2"
+URL = "http://localhost:8000/quotes"
+TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 
-data = {
-    "text": "this is a test quote for testing web application (edited)",
-    "author": "ali ahmadi (edited)"
+
+headers = {
+    "Authorization": f"Bearer {TOKEN}"
 }
 
-response = requests.put(URL, json=data)
+
+data = {
+    "text": "quote quote quote",
+    "author": "ali ali ali"
+}
+
+response = requests.post(URL, json=data, headers=headers)
 
 print(str(response.status_code) + " " + response.text)

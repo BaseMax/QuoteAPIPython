@@ -6,6 +6,7 @@ import random
 from .database import get_db
 from .models import Quote as QuoteModel
 from .schema import Quote as QuoteSchema
+from .user import User
 
 class Quote:
     """
@@ -14,6 +15,7 @@ class Quote:
     
     def __init__(self, db = Depends(get_db), token = "") -> None:
         self.db = db
+        self.user = User(db)
         self.token = token
         
     
@@ -42,6 +44,9 @@ class Quote:
 
 
     def create(self, UserQuote: QuoteSchema):
+        if not self.user.check(self.token):
+            return self.unauthorized()
+        
         db_quote = QuoteModel(text=UserQuote.text, author=UserQuote.author)
         self.db.add(db_quote)
         self.db.commit()
@@ -50,6 +55,9 @@ class Quote:
     
     
     def edit(self, quote_id: int, UserQuote: QuoteSchema):
+        if not self.user.check(self.token):
+            return self.unauthorized()
+        
         quote = self.get_by_id(quote_id)
         if not quote:
             return self.not_found()
@@ -63,6 +71,9 @@ class Quote:
     
     
     def delete(self, quote_id: int):
+        if not self.user.check(self.token):
+            return self.unauthorized()
+        
         quote = self.get_by_id(quote_id)
         if not quote:
             return self.not_found()
@@ -78,3 +89,9 @@ class Quote:
         return JSONResponse({
                 "detail": "quote not found."
             }, 404)
+    
+    
+    def unauthorized(self):
+        return JSONResponse({
+            "detail": "unauthorized"
+        }, 401)
