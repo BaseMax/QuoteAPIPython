@@ -45,4 +45,19 @@ class Quote:
         self.db.commit()
         self.db.refresh(db_quote)
         return db_quote
+    
+    
+    def edit(self, quote_id: int, UserQuote: QuoteSchema):
+        quote = self.get_by_id(quote_id)
+        if not quote:
+            return JSONResponse({
+                "detail": "quote not found."
+            }, 404)
+        
+        quote.text = UserQuote.text
+        quote.author = UserQuote.author
+        
+        self.db.commit()
+        self.db.refresh(quote)
+        return quote
         
