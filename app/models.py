@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text
 from sqlalchemy.ext.declarative import declarative_base
+from .database import engine
 
 
 Base = declarative_base()
@@ -16,3 +17,4 @@ class Quote(Base):
     text: str = Column(Text, index=True)
     author: str = Column(String(30), index=True)
 
+Base.metadata.create_all(bind=engine)
