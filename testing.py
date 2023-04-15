@@ -1,6 +1,6 @@
 import requests
 
-URL = "http://localhost:8000/quotes/1"
+URL = "http://localhost:8000/quotes/2"
 
 data = {
     "text": "this is a test quote for testing web application (edited)",

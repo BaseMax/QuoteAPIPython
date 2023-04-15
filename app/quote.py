@@ -1,5 +1,6 @@
 from fastapi import Depends
 from fastapi.responses import JSONResponse
+from fastapi.security import HTTPBearer
 import random
 
 from .database import get_db
@@ -11,8 +12,9 @@ class Quote:
         Quote class can use for get Quotes and create and ...
     """
     
-    def __init__(self, db = Depends(get_db)) -> None:
+    def __init__(self, db = Depends(get_db), token = "") -> None:
         self.db = db
+        self.token = token
         
     
     def get_all(self):
