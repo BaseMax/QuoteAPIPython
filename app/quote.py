@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException
+from fastapi import Depends
 from fastapi.responses import JSONResponse
 import random
 
@@ -23,7 +23,7 @@ class Quote:
         quote = self.db.query(QuoteModel).filter(QuoteModel.id == quote_id).first() 
         if quote:
             return quote
-        return HTTPException(status_code=404, detail="quote not found.")
+        return self.not_found()
     
     
     def get_random(self):
@@ -50,9 +50,7 @@ class Quote:
     def edit(self, quote_id: int, UserQuote: QuoteSchema):
         quote = self.get_by_id(quote_id)
         if not quote:
-            return JSONResponse({
-                "detail": "quote not found."
-            }, 404)
+            return self.not_found()
         
         quote.text = UserQuote.text
         quote.author = UserQuote.author
@@ -60,4 +58,21 @@ class Quote:
         self.db.commit()
         self.db.refresh(quote)
         return quote
+    
+    
+    def delete(self, quote_id: int):
+        quote = self.get_by_id(quote_id)
+        if not quote:
+            return self.not_found()
         
+        self.db.delete(quote)
+        self.db.commit()
+        return JSONResponse({
+            "detail": "Quote deleted successfuly."
+        })
+    
+    
+    def not_found(self):
+        return JSONResponse({
+                "detail": "quote not found."
+            }, 404)
