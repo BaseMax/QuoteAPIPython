@@ -30,6 +30,8 @@ async def get_quote_by_id(quote_id: int,db: Session = Depends(get_db)):
 async def add_quote(UserQuote: Qu, db: Session = Depends(get_db), token: str = Depends(get_token)):
     quote = Quote(db, token)
     return quote.create(UserQuote)
+
+
 @application.put("/quotes/{quote_id}")
 async def edit_quote(quote_id: int, UserQuote: Qu, db: Session = Depends(get_db), token: str = Depends(get_token)):
     quote = Quote(db, token)
