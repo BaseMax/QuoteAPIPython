@@ -40,6 +40,7 @@ Returns a single random quote:
 ```http
 GET /quotes?q=someone
 ```
+
 Response:
 
 ```json
@@ -51,8 +52,6 @@ Response:
     }
 ]
 ```
-
-
 
 3. Retrieve a list of all quotes
 
@@ -112,10 +111,11 @@ Updates an existing quote with the given quote_id. The request body should inclu
 ```
 
 6. Delete a quote
+
 ```http
 DELETE /quotes/{quote_id}
 ```
 
-Deletes the quote with the given quote_id.
+Deletes the quote with the given `quote_id`.
 
 Copyright 2023, Max Base
