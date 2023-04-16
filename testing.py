@@ -14,6 +14,10 @@ data = {
     "author": "ali ali ali"
 }
 
+data_get = {
+    
+}
+
 response = requests.post(URL, json=data, headers=headers)
 
 print(str(response.status_code) + " " + response.text)

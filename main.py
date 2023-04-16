@@ -46,3 +46,4 @@ async def edit_quote(quote_id: int, UserQuote: Qu, db: Session = Depends(get_db)
 async def delete_quote(quote_id: int, db: Session = Depends(get_db), token: str = Depends(get_token)):
     quote = Quote(db, token)
     return quote.delete(quote_id)
+
