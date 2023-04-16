@@ -13,9 +13,9 @@ Here are some additional features we can add:
 ## Technologies Used
 
 - Python
-- Flask or FastAPI
+- FastAPI
 - SQLAlchemy
-- SQLite or PostgreSQL
+- SQLite
 
 ## Requirements
 
