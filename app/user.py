@@ -14,6 +14,7 @@ class User:
         
     
     def check(self, token):
+        print(token)
         user = self.db.query(UserModel).filter(UserModel.token == token).first()
         if user:
             return True

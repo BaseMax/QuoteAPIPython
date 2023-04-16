@@ -1,14 +1,12 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-from fastapi.security import HTTPBearer
 
-from app.database import get_db
+from app.database import get_db, get_token
 from app.quote import Quote
 from app.schema import Quote as Qu
 
 
 application = FastAPI()
-security = HTTPBearer()
 
 @application.get("/quotes")
 async def get_all_quotes(db: Session = Depends(get_db)):
@@ -32,19 +30,19 @@ async def get_quote_by_id(quote_id: int,db: Session = Depends(get_db)):
 
 
 @application.post("/quotes")
-async def add_quote(UserQuote: Qu, db: Session = Depends(get_db), token: str = Depends(security)):
+async def add_quote(UserQuote: Qu, db: Session = Depends(get_db), token: str = Depends(get_token)):
     quote = Quote(db, token)
     return quote.create(UserQuote)
 
 
 
 @application.put("/quotes/{quote_id}")
-async def edit_quote(quote_id: int, UserQuote: Qu, db: Session = Depends(get_db), token: str = Depends(security)):
+async def edit_quote(quote_id: int, UserQuote: Qu, db: Session = Depends(get_db), token: str = Depends(get_token)):
     quote = Quote(db, token)
     return quote.edit(quote_id, UserQuote)
 
 
 @application.delete("/quotes/{quote_id}")
-async def delete_quote(quote_id: int, db: Session = Depends(get_db), token: str = Depends(security)):
+async def delete_quote(quote_id: int, db: Session = Depends(get_db), token: str = Depends(get_token)):
     quote = Quote(db, token)
     return quote.delete(quote_id)

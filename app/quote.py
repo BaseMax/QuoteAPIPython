@@ -1,6 +1,5 @@
 from fastapi import Depends
 from fastapi.responses import JSONResponse
-from fastapi.security import HTTPBearer
 import random
 
 from .database import get_db
