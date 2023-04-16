@@ -35,7 +35,26 @@ Returns a single random quote:
 }
 ```
 
-2. Retrieve a list of all quotes
+2.Search in Quotes:
+
+```http
+GET /quotes?q=someone
+```
+Response:
+
+```json
+[
+    {
+        "id": 5,
+        "text": "Dignity will only happen when you realize that having someone in your life doesn’t validate your worth.",
+        "author": "Shannon L. Alder"
+    }
+]
+```
+
+
+
+3. Retrieve a list of all quotes
 
 ```http
 GET /quotes
@@ -58,7 +77,7 @@ Returns a list of all quotes in the system:
 ]
 ```
 
-3. Add a new quote
+4. Add a new quote
 
 ```http
 POST /quotes
@@ -75,7 +94,7 @@ Adds a new quote to the system. The request body should include a JSON object wi
 }
 ```
 
-4. Update an existing quote
+5. Update an existing quote
 
 ```http
 PUT /quotes/{quote_id}
@@ -92,7 +111,7 @@ Updates an existing quote with the given quote_id. The request body should inclu
 }
 ```
 
-5. Delete a quote
+6. Delete a quote
 ```http
 DELETE /quotes/{quote_id}
 ```
