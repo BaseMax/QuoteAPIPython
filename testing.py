@@ -18,6 +18,6 @@ data_get = {
     
 }
 
-response = requests.post(URL, json=data, headers=headers)
+response = requests.get(URL)
 
 print(str(response.status_code) + " " + response.text)

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Query
 from sqlalchemy.orm import Session
 
 from app.database import get_db, get_token
@@ -9,9 +9,12 @@ from app.schema import Quote as Qu
 application = FastAPI()
 
 @application.get("/quotes")
-async def get_all_quotes(db: Session = Depends(get_db)):
+async def get_all_quotes(db: Session = Depends(get_db), q: str = Query(None, max_length=50)):
+    
     quote = Quote(db)
-    return quote.get_all()
+    if not q:
+        return quote.get_all()
+    return quote.search(q)
 
 
     

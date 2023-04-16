@@ -84,6 +84,15 @@ class Quote:
         })
     
     
+    def search(self, q: str):
+        quotes = self.db.query(QuoteModel).filter(
+                QuoteModel.text.like(f"%{q}%"),
+                QuoteModel.author.like(f"%{q}%")
+        ).all()
+        
+        return quotes
+    
+    
     def not_found(self):
         return JSONResponse({
                 "detail": "quote not found."
@@ -94,3 +103,5 @@ class Quote:
         return JSONResponse({
             "detail": "unauthorized"
         }, 401)
+        
+    
